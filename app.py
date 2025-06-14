@@ -1,6 +1,8 @@
 import streamlit as st
 import pandas as pd
 import os
+import plotly.express as px
+from datetime import datetime
 
 st.set_page_config(page_title="Re:Festival", layout="wide")
 
@@ -99,7 +101,36 @@ if menu == "메인":
 **이제는 바꿔야 할 때입니다.**  
 이 사이트는 전남 축제를 개선하고자 하는 사람들의 의견과 대안을 모으는 공간입니다.
 """)
+    st.markdown("---")
+    st.subheader("🗓️ 2025년 5월 전라남도 축제 일정")
 
+    # 5월 축제 일정 데이터
+    may_festival_dates = {
+        "보성차밭 녹차축제": ("2025-05-02", "2025-05-06"),
+        "담양 대나무축제": ("2025-05-02", "2025-05-06"),
+        "해남 공룡대축제": ("2025-05-03", "2025-05-05"),
+    }
+
+    cal_df = pd.DataFrame([
+        {
+            "축제": name,
+            "시작일": datetime.strptime(start, "%Y-%m-%d"),
+            "종료일": datetime.strptime(end, "%Y-%m-%d")
+        }
+        for name, (start, end) in may_festival_dates.items()
+    ])
+
+    fig = px.timeline(
+        cal_df,
+        x_start="시작일",
+        x_end="종료일",
+        y="축제",
+        color="축제"
+    )
+    fig.update_yaxes(autorange="reversed")
+    fig.update_layout(height=400, margin=dict(l=20, r=20, t=30, b=20))
+
+    st.plotly_chart(fig, use_container_width=True)
 # 축제 리스트
 elif menu == "축제 리스트":
     if st.session_state.page == "home":
