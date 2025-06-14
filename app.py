@@ -105,10 +105,24 @@ if menu == "메인":
 elif menu == "축제 리스트":
     if st.session_state.page == "home":
         st.title("📋 전라남도 축제 리스트")
+        sort_option = st.selectbox("정렬 기준 선택", ["기본 순서", "평점 높은 순", "평점 낮은 순"])
+
+        # 축제 + 평균 평점 리스트 생성
+        fest_ratings = []
         for fest in festival_list:
             avg = get_average_rating(fest)
+            fest_ratings.append((fest, avg if avg is not None else 0))
+
+        # 정렬 적용
+        if sort_option == "평점 높은 순":
+            fest_ratings.sort(key=lambda x: x[1], reverse=True)
+        elif sort_option == "평점 낮은 순":
+            fest_ratings.sort(key=lambda x: x[1])
+
+        # 버튼 출력 (고유 key 추가)
+        for fest, avg in fest_ratings:
             label = f"{fest} {'⭐ ' + str(avg) if avg else ''}"
-            if st.button(label):
+            if st.button(label, key=f"button_{fest}"):
                 st.session_state.page = "festival_detail"
                 st.session_state.selected_festival = fest
 
