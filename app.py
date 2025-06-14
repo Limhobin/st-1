@@ -103,7 +103,7 @@ if menu == "메인":
 # 축제 리스트
 elif menu == "축제 리스트":
     if st.session_state.page == "home":
-        st.title("📋 분석 대상 축제 리스트")
+        st.title("📋 전라남도 축제 리스트")
         for fest in festival_list:
             avg = get_average_rating(fest)
             label = f"{fest} {'⭐ ' + str(avg) if avg else ''}"
@@ -115,7 +115,7 @@ elif menu == "축제 리스트":
         fest = st.session_state.selected_festival
         st.title(f"🔍 {fest}")
 
-        if st.button("← 축제 리스트로 돌아가기"):
+        if st.button("← 축제 목록으로 돌아가기"):
             st.session_state.page = "home"
             st.session_state.selected_festival = None
 
