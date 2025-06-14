@@ -103,7 +103,10 @@ elif menu == "축제 리스트":
     "보성 율포해변 불꽃축제": (34.7586, 127.0638), "담양 산타축제": (35.3215, 126.9858),
     "해남 명량대첩축제": (34.5430, 126.5965)
 }
-
+    if st.button("← 축제 리스트로 돌아가기"):
+            st.session_state.page = "home"
+            st.session_state.selected_festival = None
+            
     if fest in festival_coords:
         lat, lon = festival_coords[fest]
         st.subheader("📍 축제 위치")
