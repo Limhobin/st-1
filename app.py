@@ -97,7 +97,7 @@ elif menu == "축제 리스트":
                 save_suggestion(name, email, suggestion, fest)
                 st.success("의견이 성공적으로 제출되었습니다. 감사합니다!")
 
-        st.write("### ⭐ 평점 평가 (1~5)")
+        st.write("### ⭐ 평점 (1~5)")
         rating = st.slider("이 축제를 어떻게 평가하시겠습니까?", 1, 5, 3)
         if st.button("평점 제출"):
             save_rating(fest, rating)
